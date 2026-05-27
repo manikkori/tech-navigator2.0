@@ -21,7 +21,7 @@ const Signup = () => {
     const handleSignup = async (e) => {
         e.preventDefault();
         try {
-            const res = await axios.post('http://localhost:5000/api/auth/register', formData);
+            const res = await axios.post('https://technavigatorbackend.onrender.com/api/auth/register', formData);
             
             if (res.data.success) {
                 toast.success("Entity Registered! Proceed to Login.", {

@@ -15,7 +15,7 @@ const Dashboard = () => {
         const fetchStats = async () => {
             if (!token) return;
             try {
-                const res = await axios.get('http://localhost:5000/api/dashboard/stats', {
+                const res = await axios.get('https://technavigatorbackend.onrender.com/api/dashboard/stats', {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (res.data.success) {

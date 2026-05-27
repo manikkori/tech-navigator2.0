@@ -51,7 +51,7 @@ const Roadmaps = () => {
     if (!token) return;
     try {
       const res = await axios.get(
-        "http://localhost:5000/api/roadmaps/my-roadmaps",
+        "https://technavigatorbackend.onrender.com/api/roadmaps/my-roadmaps",
         {
           headers: { Authorization: `Bearer ${token}` },
         },
@@ -84,7 +84,7 @@ const Roadmaps = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/roadmaps/generate",
+        "https://technavigatorbackend.onrender.com/api/roadmaps/generate",
         formData,
         {
           headers: { Authorization: `Bearer ${token}` },
@@ -149,7 +149,7 @@ const Roadmaps = () => {
         : "Tech Path";
 
       const res = await axios.post(
-        "http://localhost:5000/api/roadmaps/ask-doubt",
+        "https://technavigatorbackend.onrender.com/api/roadmaps/ask-doubt",
         {
           question: currentQuery,
           roadmapContext: safeContext,

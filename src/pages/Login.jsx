@@ -14,7 +14,7 @@ const Login = () => {
         e.preventDefault();
         try {
             // Backend server ka API URL
-            const res = await axios.post('http://localhost:5000/api/auth/login', { email, password });
+            const res = await axios.post('https://technavigatorbackend.onrender.com/api/auth/login', { email, password });
             
             if (res.data.success) {
                 toast.success(res.data.message, {

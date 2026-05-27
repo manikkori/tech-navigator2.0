@@ -16,7 +16,7 @@ const Users = () => {
 
     const fetchUsers = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/users', {
+            const res = await axios.get('https://technavigatorbackend.onrender.com/api/users', {
                 headers: { Authorization: `Bearer ${token}` }
             });
             setUsersList(res.data.users);
@@ -33,7 +33,7 @@ const Users = () => {
         
         if (window.confirm("WARNING: Are you sure you want to terminate this entity?")) {
             try {
-                const res = await axios.delete(`http://localhost:5000/api/users/${id}`, {
+                const res = await axios.delete(`https://technavigatorbackend.onrender.com/api/users/${id}`, {
                     headers: { Authorization: `Bearer ${token}` }
                 });
                 if (res.data.success) {

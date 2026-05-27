@@ -44,7 +44,7 @@ const Assessment = () => {
 
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/quiz/generate",
+        "https://technavigatorbackend.onrender.com/api/quiz/generate",
         {},
         { headers: { Authorization: `Bearer ${token}` } },
       );
@@ -80,7 +80,7 @@ const Assessment = () => {
     setIsAnalyzing(true);
     try {
       const res = await axios.post(
-        "http://localhost:5000/api/quiz/analyze",
+        "https://technavigatorbackend.onrender.com/api/quiz/analyze",
         { qnaHistory: finalAnswers },
         { headers: { Authorization: `Bearer ${token}` } },
       );

@@ -50,7 +50,7 @@ const ResumeScan = () => {
         }
 
         try {
-            const res = await axios.post('http://localhost:5000/api/resume/analyze', formData, {
+            const res = await axios.post('https://technavigatorbackend.onrender.com/api/resume/analyze', formData, {
                 headers: { 
                     'Content-Type': 'multipart/form-data',
                     Authorization: `Bearer ${token}` 

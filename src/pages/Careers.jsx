@@ -24,7 +24,7 @@ const Careers = () => {
 
     const fetchCareers = async () => {
         try {
-            const res = await axios.get('http://localhost:5000/api/careers');
+            const res = await axios.get('https://technavigatorbackend.onrender.com/api/careers');
             setCareers(res.data.careers);
             setIsLoading(false);
         } catch (error) {
@@ -41,7 +41,7 @@ const Careers = () => {
                 topSkills: formData.topSkills.split(',').map(skill => skill.trim())
             };
 
-            const res = await axios.post('http://localhost:5000/api/careers', formattedData, {
+            const res = await axios.post('https://technavigatorbackend.onrender.com/api/careers', formattedData, {
                 headers: { Authorization: `Bearer ${token}` }
             });
 
