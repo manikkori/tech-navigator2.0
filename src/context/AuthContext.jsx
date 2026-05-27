@@ -1,39 +1,41 @@
+// AuthContext.jsx ke andar
 import { createContext, useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import axios from 'axios';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
+    // STARTING ME HI LOCALSTORAGE SE TOKEN NIKALO
+    const [token, setToken] = useState(localStorage.getItem('token') || null);
     const [user, setUser] = useState(null);
-    const [token, setToken] = useState(localStorage.getItem('token') || '');
-    const navigate = useNavigate();
 
-    // Jab app load ho, token check karo
+    // Jab bhi token change ho, user ki details backend se fetch karo
     useEffect(() => {
         if (token) {
-            const storedUser = JSON.parse(localStorage.getItem('user'));
-            setUser(storedUser);
+            // Token ko har aage ki request ke liye default set kar do
+            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+            
+            // Backend se user data manga lo (agar tumhara koi /api/auth/me route hai)
+            // Warna user data ko bhi localStorage me stringify karke rakh sakte ho.
+        } else {
+            delete axios.defaults.headers.common['Authorization'];
         }
     }, [token]);
 
-    const login = (userData, userToken) => {
-        localStorage.setItem('token', userToken);
-        localStorage.setItem('user', JSON.stringify(userData));
-        setToken(userToken);
+    const login = (newToken, userData) => {
+        localStorage.setItem('token', newToken);
+        setToken(newToken);
         setUser(userData);
-        navigate('/dashboard'); // Login hote hi seedha dashboard par
     };
 
     const logout = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('user');
-        setToken('');
+        setToken(null);
         setUser(null);
-        navigate('/login');
     };
 
     return (
-        <AuthContext.Provider value={{ user, token, login, logout }}>
+        <AuthContext.Provider value={{ token, user, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
