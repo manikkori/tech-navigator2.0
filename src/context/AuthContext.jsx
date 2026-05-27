@@ -1,45 +1,39 @@
 import { createContext, useState, useEffect } from 'react';
-import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
-    // 1. Initial load par browser ki memory (localStorage) se data uthana
-    const [token, setToken] = useState(localStorage.getItem('token') || null);
-    
-    // User data ko bhi string se wapas JSON me convert karke nikalna
-    const [user, setUser] = useState(() => {
-        const savedUser = localStorage.getItem('user');
-        return savedUser ? JSON.parse(savedUser) : null;
-    });
+    const [user, setUser] = useState(null);
+    const [token, setToken] = useState(localStorage.getItem('token') || '');
+    const navigate = useNavigate();
 
-    // 2. Token jab bhi mile, usko Axios headers me set kar dena
+    // Jab app load ho, token check karo
     useEffect(() => {
         if (token) {
-            axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
-        } else {
-            delete axios.defaults.headers.common['Authorization'];
+            const storedUser = JSON.parse(localStorage.getItem('user'));
+            setUser(storedUser);
         }
     }, [token]);
 
-    // 3. Perfect Login Function (Memory me permanently save karne ke liye)
-    const login = (newToken, userData) => {
-        localStorage.setItem('token', newToken);
+    const login = (userData, userToken) => {
+        localStorage.setItem('token', userToken);
         localStorage.setItem('user', JSON.stringify(userData));
-        setToken(newToken);
+        setToken(userToken);
         setUser(userData);
+        navigate('/dashboard'); // Login hote hi seedha dashboard par
     };
 
-    // 4. Perfect Logout Function (Memory saaf karne ke liye)
     const logout = () => {
         localStorage.removeItem('token');
         localStorage.removeItem('user');
-        setToken(null);
+        setToken('');
         setUser(null);
+        navigate('/login');
     };
 
     return (
-        <AuthContext.Provider value={{ token, user, setToken, setUser, login, logout }}>
+        <AuthContext.Provider value={{ user, token, login, logout }}>
             {children}
         </AuthContext.Provider>
     );
