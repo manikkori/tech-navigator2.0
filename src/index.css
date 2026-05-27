@@ -1,0 +1,42 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  /* Enforcing Geometric corners globally */
+  * {
+    @apply rounded-none;
+  }
+
+  body {
+    @apply bg-darkBg text-slate-100 antialiased font-sans overflow-x-hidden;
+    background-image: 
+      linear-gradient(rgba(20, 184, 166, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(20, 184, 166, 0.05) 1px, transparent 1px);
+    background-size: 50px 50px; /* Subtle technical grid pattern */
+  }
+}
+
+@layer components {
+  /* Definition for the Premium Square-Tech Button */
+  .btn-tech {
+    @apply px-6 py-3 font-mono text-sm tracking-widest border border-teal-500 text-teal-300 bg-teal-950/30 transition-all duration-300 ease-in-out hover:bg-teal-500 hover:text-darkBg active:scale-95;
+    position: relative;
+    clip-path: polygon(0 0, 100% 0, 100% calc(100% - 10px), calc(100% - 10px) 100%, 0 100%);
+  }
+
+  /* Key Engineering Animation: Glowing Border on Focus */
+  .input-tech {
+    @apply w-full px-4 py-3 bg-slate-800 border-l-4 border-slate-700 font-mono text-slate-100 placeholder-slate-500 transition-all duration-300 ease-in-out focus:outline-none focus:border-teal-500 focus:bg-slate-700/50;
+  }
+}
+
+/* Base fade-in animation for pages */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.animate-page-in {
+  animation: fadeIn 0.5s ease-out forwards;
+}
